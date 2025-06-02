@@ -15,18 +15,46 @@ class employeecontroller extends Controller
         return view ('employee.index', compact('employees'));
     }
 
-    public function create(Request $request){
-        request()->validate([
-            'fname'=> '',
-            'midname'=>'',
-            'lname'=>'',
-            ''
-
-
-
-
-        ])
+    public function create(){
+        return view('employee.create');   
     }
+    public function store(Request $request){
+        request()->validate([
+            'fname'=> 'required',
+            'midname'=>'required',
+            'lname'=>'required',
+            'address'=>'required',
+            'zip'=>'required',
+            'age'=> 'required'
+        ]);
+    employee::create(request()->all());
+    return view('employee.create');
+    }
+    
+    public function edit(int $id){
+         $employees = employee::find($id);
+         return view('employee.edit', compact('employees'));  
+    }
+
+    public function update(Request $request , int $id){
+         request()->validate([
+            'fname'=> 'required',
+            'midname'=>'required',
+            'lname'=>'required',
+            'address'=>'required',
+            'zip'=>'required',
+            'age'=> 'required'
+        ]);
+        employee::findOrFail($id)->update(request()->all());
+        return redirect()->back()->width('status','Updated Successfully');
+    }
+
+    public function destroy(int $id){
+        $employees = employee::findOrFail($id);
+        return redirect()->back()->width('status','Deleted Successfully');    
+    }
+
+
 
 
 
