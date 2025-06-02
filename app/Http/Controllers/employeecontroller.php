@@ -12,8 +12,24 @@ class employeecontroller extends Controller
     {   
         $employees = employee::get();
 
-        return view ('employee.index');
+        return view ('employee.index', compact('employees'));
     }
+
+    public function create(Request $request){
+        request()->validate([
+            'fname'=> '',
+            'midname'=>'',
+            'lname'=>'',
+            ''
+
+
+
+
+        ])
+    }
+
+
+
 
     // employee::create($request->all());
     // return view ('employee.create');
